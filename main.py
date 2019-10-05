@@ -3,17 +3,11 @@ def activate_hook(torch):
     return sy.TorchHook(torch)
 
 
-def make_socket_serever(host, hook, id, port, log_msgs=True, verbose=True):
+def make_socket_server(host, hook, id, port, log_msgs=True, verbose=True):
     from syft.workers.websocket_server import WebsocketServerWorker
     server = WebsocketServerWorker(host=host, hook=hook, id=id, port=port,
                                    log_msgs=log_msgs, verbose=verbose)
     return server
-
-
-# def pickle_socket_server(server, pickle_path="./server.pkl"):
-#     import pickle
-#     with open(pickle_path, 'wb') as f:
-#         pickle.dump(server, f)
 
 
 def main():
@@ -21,9 +15,8 @@ def main():
     hook = activate_hook(torch)
     host = "localhost"
     id = 0
-    port = 8182
-    server = make_socket_serever(host=host, hook=hook, id=id, port=port)
-    # pickle_socket_server(server)
+    port = 8000
+    server = make_socket_server(host=host, hook=hook, id=id, port=port)
     server.start()
     # server.list_objects()
     # server.objects_count()
